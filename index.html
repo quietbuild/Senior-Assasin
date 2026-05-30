@@ -16,7 +16,7 @@ body{
   overflow-x:hidden;
 }
 
-/* CLEAN CINEMATIC BACKGROUND (STABLE, NOT BLACK-FALLBACK PRONE) */
+/* cinematic background */
 body::before{
   content:"";
   position:fixed;
@@ -28,7 +28,6 @@ body::before{
   z-index:-2;
 }
 
-/* subtle grid */
 body::after{
   content:"";
   position:fixed;
@@ -47,7 +46,6 @@ body::after{
   padding:18px;
 }
 
-/* HEADER */
 .header{
   text-align:center;
   margin:10px 0 18px;
@@ -65,7 +63,6 @@ body::after{
   text-shadow:0 0 12px rgba(0,255,200,0.5);
 }
 
-/* PANEL */
 .panel{
   background:rgba(0,0,0,0.25);
   border:1px solid rgba(0,255,210,0.2);
@@ -74,7 +71,6 @@ body::after{
   margin:12px 0;
 }
 
-/* STATUS */
 .big{
   font-size:54px;
   text-align:center;
@@ -89,7 +85,6 @@ body::after{
   margin-top:5px;
 }
 
-/* TOP 3 */
 .card{
   display:flex;
   justify-content:space-between;
@@ -120,7 +115,6 @@ body::after{
   font-size:18px;
 }
 
-/* SIGNATURE */
 .signature{
   text-align:center;
   margin-top:20px;
@@ -154,10 +148,11 @@ body::after{
 <script>
 
 /* =========================
-   EASY EDIT ZONE ONLY
+   EASY EDIT ZONE
 ========================= */
 
 const TOTAL_PLAYERS = 38;
+const REMAINING_PLAYERS = 11;
 
 const players = [
   { name:"Dante Larizza", kills:9 },
@@ -179,10 +174,8 @@ function render(){
     .sort((a,b)=>b.kills-a.kills)
     .slice(0,3);
 
-  const remaining = TOTAL_PLAYERS - players.length;
-
-  status.innerText = `${remaining} / ${TOTAL_PLAYERS}`;
-  substatus.innerText = "ASSASSINS ACTIVE";
+  status.innerText = `${REMAINING_PLAYERS} REMAIN / ${TOTAL_PLAYERS}`;
+  substatus.innerText = "ACTIVE ASSASSINS";
 
   const labels = ["🥇 TOP 1", "🥈 TOP 2", "🥉 TOP 3"];
 
@@ -195,7 +188,7 @@ function render(){
           <span class="tag">${labels[i]}</span>
           ${p.name}
         </div>
-        <div class="kills">${p.kills}</div>
+        <div class="kills">${p.kills} ELIMS</div>
       </div>
     `;
   });
