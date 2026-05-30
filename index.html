@@ -16,7 +16,7 @@ body{
   overflow-x:hidden;
 }
 
-/* background */
+/* cinematic background */
 body::before{
   content:"";
   position:fixed;
@@ -133,6 +133,15 @@ body::after{
   color:#ffd700;
   font-size:13px;
 }
+
+/* signature */
+.signature{
+  text-align:center;
+  margin-top:20px;
+  font-size:10px;
+  opacity:0.35;
+  letter-spacing:3px;
+}
 </style>
 </head>
 
@@ -161,6 +170,8 @@ body::after{
     </div>
   </div>
 
+  <div class="signature">SYSTEM DESIGN BY VRISHAB VARUN</div>
+
 </div>
 
 <script>
@@ -173,7 +184,7 @@ const TOTAL_PLAYERS = 38;
 const REMAINING_PLAYERS = 11;
 
 const eliminated = [
-  // add names here when out
+  // add names here
 ];
 
 const players = [
