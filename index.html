@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ASSASSIN OPS // CLASSIFIED</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: Orbitron, sans-serif;
+  background: radial-gradient(circle at center, #02040a, #000);
+  color: #dff;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND GLOW */
+body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background: radial-gradient(circle at 50% 40%, rgba(0,255,200,0.12), transparent 60%);
+  z-index:-1;
+}
+
+/* FLASH EFFECT */
+.flash {
+  position: fixed;
+  inset: 0;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.flash.active {
+  animation: flash 0.35s ease;
+}
+
+@keyframes flash {
+  0% { opacity: 0; }
+  30% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* SHAKE EFFECT */
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translate(0); }
+  25% { transform: translate(-2px,2px); }
+  50% { transform: translate(2px,-2px); }
+  75% { transform: translate(-1px,1px); }
+  100% { transform: translate(0); }
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 15px;
+}
+
+/* PANELS */
+.panel {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0,255,200,0.15);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px 0;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 0 25px rgba(0,255,200,0.08);
+  transition: 0.3s;
+}
+
+.panel.glow {
+  box-shadow: 0 0 50px rgba(0,255,200,0.35);
+  transform: scale(1.01);
+}
+
+.title {
+  font-size: 12px;
+  opacity: 0.5;
+  letter-spacing: 2px;
+}
+
+/* BIG NUMBER */
+.big {
+  font-size: 60px;
+  text-align: center;
+  color: #00ffd0;
+  text-shadow: 0 0 15px #00ffd0;
+}
+
+/* MODE */
+.mode {
+  text-align: center;
+  font-size: 26px;
+  color: #00ffd0;
+}
+
+/* TOP 3 */
+.top {
+  display: flex;
+  gap: 10px;
+}
+
+.card {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.gold { background: linear-gradient(135deg, #ffd70033, #ffb30022); }
+.silver { background: linear-gradient(135deg, #c0c0c033, #88888822); }
+.bronze { background: linear-gradient(135deg, #cd7f3233, #8b451322); }
+
+/* FEED */
+.feed {
+  min-height: 80px;
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* BUTTON (hidden admin vibe) */
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #00ffd0;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* SIGNATURE */
+.signature {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 11px;
+  opacity: 0.25;
+  letter-spacing: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="flash" id="flash"></div>
+
+<div class="container">
+
+  <div class="panel" id="p1">
+    <div class="title">ACTIVE OPERATIVES</div>
+    <div class="big" id="count">38</div>
+  </div>
+
+  <div class="panel" id="p2">
+    <div class="title">OPERATION MODE</div>
+    <div class="mode" id="mode">SOLOS</div>
+  </div>
+
+  <div class="panel">
+    <div class="title">TOP ELIMINATORS</div>
+    <div class="top">
+      <div class="card gold" id="a">Agent A<br>0</div>
+      <div class="card silver" id="b">Agent B<br>0</div>
+      <div class="card bronze" id="c">Agent C<br>0</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="title">RECENT ELIMINATIONS</div>
+    <div class="feed" id="feed">
+      System ready...
+    </div>
+  </div>
+
+  <div class="signature">VRISHAB VARUN</div>
+
+</div>
+
+<script>
+
+/* ===== DATA ===== */
+let data = {
+  mode: "SOLOS",
+  count: 38,
+  a: ["Agent A", 0],
+  b: ["Agent B", 0],
+  c: ["Agent C", 0],
+  feed: ["SYSTEM INITIALIZED"]
+};
+
+/* ===== RENDER ===== */
+function render(){
+  count.innerText = data.count;
+  mode.innerText = data.mode;
+
+  a.innerHTML = data.a[0] + "<br>" + data.a[1];
+  b.innerHTML = data.b[0] + "<br>" + data.b[1];
+  c.innerHTML = data.c[0] + "<br>" + data.c[1];
+
+  feed.innerHTML = data.feed.slice().reverse().join("<br>");
+}
+
+/* ===== KILL ANIMATION ===== */
+function kill(text){
+  flash.classList.add("active");
+
+  document.querySelectorAll(".panel").forEach(p=>{
+    p.classList.add("glow");
+    setTimeout(()=>p.classList.remove("glow"),400);
+  });
+
+  document.body.classList.add("shake");
+  setTimeout(()=>document.body.classList.remove("shake"),300);
+
+  data.feed.push("💀 " + text);
+  data.count--;
+
+  setTimeout(()=>flash.classList.remove("active"),300);
+
+  render();
+}
+
+/* ===== DEMO EVENTS ===== */
+setTimeout(()=>kill("Agent A eliminated Phantom"),2000);
+setTimeout(()=>kill("Agent B eliminated Ghost"),4000);
+
+render();
+
+</script>
+
+</body>
+</html>
