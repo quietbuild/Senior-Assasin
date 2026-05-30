@@ -16,7 +16,7 @@ body{
   overflow-x:hidden;
 }
 
-/* cinematic background */
+/* background */
 body::before{
   content:"";
   position:fixed;
@@ -78,13 +78,6 @@ body::after{
   text-shadow:0 0 15px rgba(0,255,210,0.5);
 }
 
-.sub{
-  text-align:center;
-  font-size:12px;
-  opacity:0.7;
-  margin-top:5px;
-}
-
 .card{
   display:flex;
   justify-content:space-between;
@@ -99,7 +92,6 @@ body::after{
   display:flex;
   gap:10px;
   align-items:center;
-  font-size:15px;
 }
 
 .tag{
@@ -112,15 +104,34 @@ body::after{
 
 .kills{
   color:#00ffd0;
-  font-size:18px;
 }
 
-.signature{
-  text-align:center;
-  margin-top:20px;
-  font-size:10px;
-  opacity:0.35;
-  letter-spacing:3px;
+.out{
+  color:#ff4d6d;
+  font-size:11px;
+  margin-left:8px;
+}
+
+/* bounty */
+.bounty-title{
+  color:#ffd700;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.bounty-card{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  border-radius:10px;
+  background:rgba(255,215,0,0.08);
+  border:1px solid rgba(255,215,0,0.3);
+  margin-top:8px;
+}
+
+.bounty-value{
+  color:#ffd700;
+  font-size:13px;
 }
 </style>
 </head>
@@ -136,23 +147,34 @@ body::after{
 
   <div class="panel">
     <div class="big" id="status"></div>
-    <div class="sub" id="substatus"></div>
+    <div style="text-align:center;font-size:12px;opacity:0.7;">ACTIVE ASSASSINS</div>
   </div>
 
   <div class="panel" id="board"></div>
 
-  <div class="signature">© Vrishab Varun</div>
+  <div class="panel">
+    <div class="bounty-title">💰 ACTIVE BOUNTIES</div>
+
+    <div class="bounty-card">
+      <div>Renzo Macatangay</div>
+      <div class="bounty-value">BOUNTY</div>
+    </div>
+  </div>
 
 </div>
 
 <script>
 
 /* =========================
-   EASY EDIT ZONE
+   ONLY EDIT THIS SECTION
 ========================= */
 
 const TOTAL_PLAYERS = 38;
 const REMAINING_PLAYERS = 11;
+
+const eliminated = [
+  // add names here when out
+];
 
 const players = [
   { name:"Dante Larizza", kills:9 },
@@ -166,7 +188,10 @@ const players = [
 
 const board = document.getElementById("board");
 const status = document.getElementById("status");
-const substatus = document.getElementById("substatus");
+
+function isOut(name){
+  return eliminated.includes(name);
+}
 
 function render(){
 
@@ -174,19 +199,24 @@ function render(){
     .sort((a,b)=>b.kills-a.kills)
     .slice(0,3);
 
-  status.innerText = `${REMAINING_PLAYERS} REMAIN / ${TOTAL_PLAYERS}`;
-  substatus.innerText = "ACTIVE ASSASSINS";
+  status.innerText = `${REMAINING_PLAYERS} / ${TOTAL_PLAYERS}`;
 
-  const labels = ["🥇 TOP 1", "🥈 TOP 2", "🥉 TOP 3"];
+  const labels = ["🥇 TOP 1","🥈 TOP 2","🥉 TOP 3"];
 
   board.innerHTML = "";
 
   top3.forEach((p,i)=>{
+
+    const outTag = isOut(p.name)
+      ? `<span class="out">OUT</span>`
+      : "";
+
     board.innerHTML += `
       <div class="card">
         <div class="name">
           <span class="tag">${labels[i]}</span>
           ${p.name}
+          ${outTag}
         </div>
         <div class="kills">${p.kills} ELIMS</div>
       </div>
