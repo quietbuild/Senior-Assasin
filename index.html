@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senior Assassin // Live Board</title>
+<title>Senior Assassin Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
@@ -12,25 +12,23 @@ body{
   margin:0;
   font-family:Orbitron,sans-serif;
   color:#eaffff;
+  background:#07141a;
   overflow-x:hidden;
-  background:#06131a;
 }
 
-/* 🌌 LAYERED ATMOSPHERE */
+/* CLEAN CINEMATIC BACKGROUND (STABLE, NOT BLACK-FALLBACK PRONE) */
 body::before{
   content:"";
   position:fixed;
   inset:0;
   background:
-    radial-gradient(circle at 15% 25%, rgba(0,255,220,0.28), transparent 45%),
-    radial-gradient(circle at 85% 30%, rgba(0,140,255,0.25), transparent 50%),
-    radial-gradient(circle at 50% 80%, rgba(255,0,120,0.15), transparent 55%);
-  filter: blur(18px);
-  animation: drift 10s ease-in-out infinite alternate;
-  z-index:-3;
+    radial-gradient(circle at 20% 20%, rgba(0,255,210,0.25), transparent 50%),
+    radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(255,0,120,0.15), transparent 60%);
+  z-index:-2;
 }
 
-/* 🌐 GRID */
+/* subtle grid */
 body::after{
   content:"";
   position:fixed;
@@ -38,42 +36,15 @@ body::after{
   background:
     linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size:52px 52px;
-  opacity:0.16;
-  animation: gridMove 12s linear infinite;
-  z-index:-2;
-}
-
-/* 🧠 SCAN LINE (CINEMATIC MOTION) */
-.scan{
-  position:fixed;
-  inset:-50%;
-  background:linear-gradient(to bottom,
-    transparent,
-    rgba(0,255,220,0.08),
-    transparent);
-  transform:rotate(10deg);
-  animation: scanMove 6s linear infinite;
+  background-size:50px 50px;
+  opacity:0.12;
   z-index:-1;
-  pointer-events:none;
 }
 
-/* VIGNETTE */
-.vignette{
-  position:fixed;
-  inset:0;
-  box-shadow:inset 0 0 240px rgba(0,0,0,0.85);
-  z-index:0;
-}
-
-/* CONTAINER */
 .container{
-  max-width:900px;
+  max-width:850px;
   margin:auto;
   padding:18px;
-  position:relative;
-  z-index:1;
-  animation: fadeIn 1s ease-out;
 }
 
 /* HEADER */
@@ -91,84 +62,62 @@ body::after{
 .header h2{
   font-size:22px;
   color:#00ffd0;
-  text-shadow:0 0 18px rgba(0,255,200,0.7);
+  text-shadow:0 0 12px rgba(0,255,200,0.5);
 }
 
-/* STATUS PANEL */
+/* PANEL */
 .panel{
   background:rgba(0,0,0,0.25);
-  border:1px solid rgba(0,255,220,0.18);
-  border-radius:18px;
+  border:1px solid rgba(0,255,210,0.2);
+  border-radius:16px;
   padding:16px;
   margin:12px 0;
-  backdrop-filter:blur(20px);
-  box-shadow:0 0 30px rgba(0,255,220,0.08);
-  animation: popIn 0.8s ease-out;
 }
 
-/* BIG STATUS */
+/* STATUS */
 .big{
-  font-size:58px;
+  font-size:54px;
   text-align:center;
   color:#00ffd0;
-  text-shadow:0 0 25px #00ffd0;
+  text-shadow:0 0 15px rgba(0,255,210,0.5);
 }
 
-.subtext{
+.sub{
   text-align:center;
   font-size:12px;
   opacity:0.7;
-  letter-spacing:2px;
-  margin-top:6px;
+  margin-top:5px;
 }
 
-/* BOARD */
-.grid{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-/* TOP 3 CARDS */
+/* TOP 3 */
 .card{
-  padding:14px;
-  border-radius:14px;
   display:flex;
   justify-content:space-between;
-  align-items:center;
+  padding:12px;
+  border-radius:12px;
+  margin-top:10px;
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.08);
-  transition:0.25s;
 }
 
-.card:hover{
-  transform:scale(1.03);
-  box-shadow:0 0 40px rgba(0,255,220,0.25);
-  border-color:rgba(0,255,220,0.35);
-}
-
-/* NAME */
 .name{
-  font-size:15px;
   display:flex;
-  align-items:center;
   gap:10px;
+  align-items:center;
+  font-size:15px;
 }
 
-/* KILLS */
-.kills{
-  font-size:18px;
-  color:#00ffd0;
-  text-shadow:0 0 12px rgba(0,255,220,0.5);
-}
-
-/* 🏆 CLEAR TOP 3 LABELS */
-.rank{
-  font-size:12px;
+.tag{
+  font-size:11px;
   padding:2px 8px;
   border-radius:6px;
-  background:rgba(0,255,220,0.15);
-  border:1px solid rgba(0,255,220,0.4);
+  background:rgba(0,255,210,0.15);
+  border:1px solid rgba(0,255,210,0.3);
+}
+
+.kills{
+  color:#00ffd0;
+  font-size:18px;
 }
 
 /* SIGNATURE */
@@ -177,41 +126,12 @@ body::after{
   margin-top:20px;
   font-size:10px;
   opacity:0.35;
-  letter-spacing:4px;
-}
-
-/* ANIMATIONS */
-@keyframes drift{
-  0%{ transform:translateY(-2%) scale(1.05); }
-  100%{ transform:translateY(2%) scale(1.1); }
-}
-
-@keyframes gridMove{
-  0%{ transform:translateY(0); }
-  100%{ transform:translateY(52px); }
-}
-
-@keyframes scanMove{
-  0%{ transform:translateY(-30%) rotate(10deg); }
-  100%{ transform:translateY(30%) rotate(10deg); }
-}
-
-@keyframes fadeIn{
-  from{ opacity:0; transform:scale(0.98); }
-  to{ opacity:1; transform:scale(1); }
-}
-
-@keyframes popIn{
-  from{ opacity:0; transform:translateY(10px); }
-  to{ opacity:1; transform:translateY(0); }
+  letter-spacing:3px;
 }
 </style>
 </head>
 
 <body>
-
-<div class="vignette"></div>
-<div class="scan"></div>
 
 <div class="container">
 
@@ -221,19 +141,21 @@ body::after{
   </div>
 
   <div class="panel">
-    <div class="big" id="remaining"></div>
-    <div class="subtext" id="context"></div>
+    <div class="big" id="status"></div>
+    <div class="sub" id="substatus"></div>
   </div>
 
-  <div class="panel">
-    <div class="grid" id="board"></div>
-  </div>
+  <div class="panel" id="board"></div>
 
-  <div class="signature">© Vrishab Varun — system build</div>
+  <div class="signature">© Vrishab Varun</div>
 
 </div>
 
 <script>
+
+/* =========================
+   EASY EDIT ZONE ONLY
+========================= */
 
 const TOTAL_PLAYERS = 38;
 
@@ -245,17 +167,24 @@ const players = [
   { name:"Player 5", kills:2 }
 ];
 
-const board = document.getElementById("board");
-const remaining = document.getElementById("remaining");
-const context = document.getElementById("context");
+/* ========================= */
 
-/* RENDER */
+const board = document.getElementById("board");
+const status = document.getElementById("status");
+const substatus = document.getElementById("substatus");
+
 function render(){
+
   const top3 = [...players]
     .sort((a,b)=>b.kills-a.kills)
     .slice(0,3);
 
-  const medals = ["🥇 TOP 1", "🥈 TOP 2", "🥉 TOP 3"];
+  const remaining = TOTAL_PLAYERS - players.length;
+
+  status.innerText = `${remaining} / ${TOTAL_PLAYERS}`;
+  substatus.innerText = "ASSASSINS ACTIVE";
+
+  const labels = ["🥇 TOP 1", "🥈 TOP 2", "🥉 TOP 3"];
 
   board.innerHTML = "";
 
@@ -263,18 +192,13 @@ function render(){
     board.innerHTML += `
       <div class="card">
         <div class="name">
-          <span class="rank">${medals[i]}</span>
+          <span class="tag">${labels[i]}</span>
           ${p.name}
         </div>
         <div class="kills">${p.kills}</div>
       </div>
     `;
   });
-
-  const remainingCount = TOTAL_PLAYERS - players.length;
-
-  remaining.innerText = `${remainingCount} / ${TOTAL_PLAYERS}`;
-  context.innerText = "ASSASSINS ACTIVE";
 }
 
 render();
