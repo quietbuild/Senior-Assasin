@@ -1,249 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senior Assassin Dashboard</title>
-
-<!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0RZ6ZDJPD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Y0RZ6ZDJPD');
-</script>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-<style>
-body{
-  margin:0;
-  font-family:Orbitron,sans-serif;
-  color:#eaffff;
-  background:#07141a;
-  overflow-x:hidden;
-}
-
-/* cinematic background */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,255,210,0.25), transparent 50%),
-    radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(255,0,120,0.15), transparent 60%);
-  z-index:-2;
-}
-
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size:50px 50px;
-  opacity:0.12;
-  z-index:-1;
-}
-
-.container{
-  max-width:850px;
-  margin:auto;
-  padding:18px;
-}
-
-.header{
-  text-align:center;
-  margin:10px 0 18px;
-}
-
-.header h1{
-  font-size:12px;
-  letter-spacing:3px;
-  opacity:0.7;
-}
-
-.header h2{
-  font-size:22px;
-  color:#00ffd0;
-  text-shadow:0 0 12px rgba(0,255,200,0.5);
-}
-
-.panel{
-  background:rgba(0,0,0,0.25);
-  border:1px solid rgba(0,255,210,0.2);
-  border-radius:16px;
-  padding:16px;
-  margin:12px 0;
-}
-
-.big{
-  font-size:54px;
-  text-align:center;
-  color:#00ffd0;
-  text-shadow:0 0 15px rgba(0,255,210,0.5);
-}
-
-.card{
-  display:flex;
-  justify-content:space-between;
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-}
-
-.name{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.tag{
-  font-size:11px;
-  padding:2px 8px;
-  border-radius:6px;
-  background:rgba(0,255,210,0.15);
-  border:1px solid rgba(0,255,210,0.3);
-}
-
-.kills{
-  color:#00ffd0;
-}
-
-.out{
-  color:#ff4d6d;
-  font-size:11px;
-  margin-left:8px;
-}
-
-/* bounty */
-.bounty-title{
-  color:#ffd700;
-  font-size:12px;
-  margin-bottom:8px;
-}
-
-.bounty-card{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  border-radius:10px;
-  background:rgba(255,215,0,0.08);
-  border:1px solid rgba(255,215,0,0.3);
-  margin-top:8px;
-}
-
-.bounty-value{
-  color:#ffd700;
-  font-size:13px;
-}
-
-/* signature */
-.signature{
-  text-align:center;
-  margin-top:20px;
-  font-size:10px;
-  opacity:0.35;
-  letter-spacing:3px;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <div class="header">
-    <h1>GRADE 9 SENIOR ASSASSIN</h1>
-    <h2>LIVE BOARD</h2>
-  </div>
-
-  <div class="panel">
-    <div class="big" id="status"></div>
-    <div style="text-align:center;font-size:12px;opacity:0.7;">ACTIVE ASSASSINS</div>
-  </div>
-
-  <div class="panel" id="board"></div>
-
-  <div class="panel">
-    <div class="bounty-title">💰 ACTIVE BOUNTIES</div>
-
-    <div class="bounty-card">
-      <div>Dante Larizza</div>
-      <div class="bounty-value">BOUNTY</div>
-    </div>
-  </div>
-
-  <div class="signature">© 2026 • Vrishab Varun</div>
-
-</div>
-
-<script>
-
-/* =========================
-   ONLY EDIT THIS SECTION
-========================= */
-
-const TOTAL_PLAYERS = 38;
-const REMAINING_PLAYERS = 5;
-
-  const eliminated = [
-  "Vrishab Varun"];
-
-const players = [
-  { name:"Dante Larizza", kills:10 },
-  { name:"Adriel Callangan", kills:8 },
-  { name:"Vrishab Varun", kills:6 },
-  { name:"Player 4", kills:3 },
-  { name:"Player 5", kills:2 }
-];
-
-/* ========================= */
-
-const board = document.getElementById("board");
-const status = document.getElementById("status");
-
-function isOut(name){
-  return eliminated.includes(name);
-}
-
-function render(){
-
-  const top3 = [...players]
-    .sort((a,b)=>b.kills-a.kills)
-    .slice(0,3);
-
-  status.innerText = `${REMAINING_PLAYERS} / ${TOTAL_PLAYERS}`;
-
-  const labels = ["🥇 TOP 1","🥈 TOP 2","🥉 TOP 3"];
-
-  board.innerHTML = "";
-
-  top3.forEach((p,i)=>{
-
-    const outTag = isOut(p.name)
-      ? `<span class="out">OUT</span>`
-      : "";
-
-    board.innerHTML += `
-      <div class="card">
         <div class="name">
-          <span class="tag">${labels[i]}</span>
-          ${p.name}
-          ${outTag}
+
+          <span class="tag">
+            ${labels[index]}
+          </span>
+
+          <span>
+            ${player.name}
+          </span>
+
+          ${statusBadge}
+
         </div>
-        <div class="kills">${p.kills} ELIMS</div>
+
+        <div class="kills">
+          ${player.kills} ELIMS
+        </div>
+
       </div>
     `;
+
   });
+
 }
 
-render();
+status.innerText =
+  `${REMAINING_PLAYERS} / ${TOTAL_PLAYERS}`;
+
+renderLeaderboard();
+renderBounties();
 
 </script>
 
