@@ -1,252 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Senior Assassin Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0RZ6ZDJPD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-Y0RZ6ZDJPD');
-</script>
+  <title>Grade 9 Senior Assassin</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <!-- GOOGLE ANALYTICS -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y0RZ6ZDJPD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y0RZ6ZDJPD');
+  </script>
 
-<style>
-body{
-  margin:0;
-  font-family:Orbitron,sans-serif;
-  color:#eaffff;
-  background:#07141a;
-  overflow-x:hidden;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-/* cinematic background */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,255,210,0.25), transparent 50%),
-    radial-gradient(circle at 80% 30%, rgba(0,140,255,0.25), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(255,0,120,0.15), transparent 60%);
-  z-index:-2;
-}
+  <style>
+    :root {
+      --cyan: #00ffd0;
+      --cyan-dark: #00c7a3;
+      --red: #ff4d6d;
+      --gold: #ffd700;
+      --bg: #07141a;
+      --panel: rgba(255, 255, 255, .04);
+    }
 
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size:50px 50px;
-  opacity:0.12;
-  z-index:-1;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-.container{
-  max-width:850px;
-  margin:auto;
-  padding:18px;
-}
+    body {
+      margin: 0;
+      font-family: Orbitron, sans-serif;
+      color: #eaffff;
+      background: var(--bg);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-.header{
-  text-align:center;
-  margin:10px 0 18px;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(0, 255, 210, .20), transparent 40%),
+        radial-gradient(circle at 80% 25%, rgba(0, 140, 255, .20), transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(255, 0, 120, .12), transparent 50%);
+      z-index: -2;
+    }
 
-.header h1{
-  font-size:12px;
-  letter-spacing:3px;
-  opacity:0.7;
-}
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
+      background-size: 50px 50px;
+      opacity: .12;
+      z-index: -1;
+    }
 
-.header h2{
-  font-size:22px;
-  color:#00ffd0;
-  text-shadow:0 0 12px rgba(0,255,200,0.5);
-}
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
 
-.panel{
-  background:rgba(0,0,0,0.25);
-  border:1px solid rgba(0,255,210,0.2);
-  border-radius:16px;
-  padding:16px;
-  margin:12px 0;
-}
+    .header {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
 
-.big{
-  font-size:54px;
-  text-align:center;
-  color:#00ffd0;
-  text-shadow:0 0 15px rgba(0,255,210,0.5);
-}
+    .header h1 {
+      font-size: 12px;
+      letter-spacing: 4px;
+      opacity: .7;
+      margin-bottom: 8px;
+    }
 
-.card{
-  display:flex;
-  justify-content:space-between;
-  padding:12px;
-  border-radius:12px;
-  margin-top:10px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-}
+    .header h2 {
+      margin: 0;
+      font-size: 30px;
+      color: var(--cyan);
+      animation: pulse 2.5s infinite;
+    }
 
-.name{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow: 0 0 10px rgba(0, 255, 210, .4);
+      }
 
-.tag{
-  font-size:11px;
-  padding:2px 8px;
-  border-radius:6px;
-  background:rgba(0,255,210,0.15);
-  border:1px solid rgba(0,255,210,0.3);
-}
+      50% {
+        text-shadow:
+          0 0 20px rgba(0, 255, 210, .8),
+          0 0 40px rgba(0, 255, 210, .5);
+      }
+    }
 
-.kills{
-  color:#00ffd0;
-}
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(0, 255, 210, .15);
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 25px rgba(0, 255, 210, .05);
+    }
 
-.out{
-  color:#ff4d6d;
-  font-size:11px;
-  margin-left:8px;
-}
+    .big {
+      text-align: center;
+      font-size: 64px;
+      color: var(--cyan);
+      text-shadow: 0 0 18px rgba(0, 255, 210, .5);
+    }
 
-/* bounty */
-.bounty-title{
-  color:#ffd700;
-  font-size:12px;
-  margin-bottom:8px;
-}
+    .subtitle {
+      text-align: center;
+      font-size: 12px;
+      opacity: .7;
+    }
 
-.bounty-card{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-  border-radius:10px;
-  background:rgba(255,215,0,0.08);
-  border:1px solid rgba(255,215,0,0.3);
-  margin-top:8px;
-}
+    .card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, rgba(0, 255, 210, .08), rgba(255, 255, 255, .03));
+      border: 1px solid rgba(255, 255, 255, .08);
+      transition: .2s;
+    }
 
-.bounty-value{
-  color:#ffd700;
-  font-size:13px;
-}
+    .card:hover {
+      transform: translateY(-2px);
+    }
 
-/* signature */
-.signature{
-  text-align:center;
-  margin-top:20px;
-  font-size:10px;
-  opacity:0.35;
-  letter-spacing:3px;
-}
-</style>
+    .name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(0, 255, 210, .15);
+      border: 1px solid rgba(0, 255, 210, .3);
+    }
+
+    .kills {
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .active {
+      color: #00ff88;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .out {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .bounty-title {
+      color: var(--gold);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .bounty-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+      background: rgba(255, 215, 0, .08);
+      border: 1px solid rgba(255, 215, 0, .25);
+    }
+
+    .bounty-value {
+      color: var(--gold);
+      font-size: 13px;
+    }
+
+    .footer-alert {
+      text-align: center;
+      color: var(--red);
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-top: 20px;
+    }
+
+    .signature {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 10px;
+      opacity: .35;
+      letter-spacing: 3px;
+    }
+
+    @media(max-width:600px) {
+      .big {
+        font-size: 48px;
+      }
+
+      .header h2 {
+        font-size: 24px;
+      }
+
+      .card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <div class="container">
 
-  <div class="header">
-    <h1>GRADE 9 SENIOR ASSASSIN</h1>
-    <h2>LIVE BOARD</h2>
-  </div>
-
-  <div class="panel">
-    <div class="big" id="status"></div>
-    <div style="text-align:center;font-size:12px;opacity:0.7;">ACTIVE ASSASSINS</div>
-  </div>
-
-  <div class="panel" id="board"></div>
-
-  <div class="panel">
-    <div class="bounty-title">💰 ACTIVE BOUNTIES</div>
-
-    <div class="bounty-card">
-      <div>NO ACTIVE BOUNTIES</div>
-      <div class="bounty-value">BOUNTY</div>
+    <div class="header">
+      <h1>GRADE 9 SENIOR ASSASSIN</h1>
+      <h2>LIVE BOARD</h2>
     </div>
+
+    <div class="panel">
+      <div class="big" id="status"></div>
+      <div class="subtitle">PLAYERS REMAINING</div>
+    </div>
+
+    <div class="panel" id="board"></div>
+
+    <div class="panel">
+      <div class="bounty-title">💰 ACTIVE BOUNTIES</div>
+      <div id="bountyList"></div>
+    </div>
+
+    <div class="footer-alert">
+      LAST UPDATED FRIDAY, JUNE 5TH
+    </div>
+
+    <div class="signature">
+      © 2026 • Vrishab Varun
+    </div>
+
   </div>
 
-  <div class="signature">© 2026 • Vrishab Varun</div>
+  <script>
+    /* =========================
+    ONLY EDIT THIS SECTION
+    ========================= */
 
-</div>
+    const TOTAL_PLAYERS = 38;
+    const REMAINING_PLAYERS = 4;
 
-<script>
+    const eliminated = [
+      "Vrishab Varun",
+      "Adriel Callangan"
+    ];
 
-/* =========================
-   ONLY EDIT THIS SECTION
-========================= */
+    const players = [
+      { name:"Dante Larizza", kills:10 },
+      { name:"Adriel Callangan", kills:8 },
+      { name:"Vrishab Varun", kills:6 },
+      { name:"Player 4", kills:3 },
+      { name:"Player 5", kills:2 }
+    ];
 
-const TOTAL_PLAYERS = 38;
-const REMAINING_PLAYERS = 4;
+    const bounties = [];
 
-  const eliminated = [
-  "Vrishab Varun",
-  "Adriel Callangan"];
+    /* =========================
+    DO NOT EDIT BELOW
+    ========================= */
 
-const players = [
-  { name:"Dante Larizza", kills:10 },
-  { name:"Adriel Callangan", kills:8 },
-  { name:"Vrishab Varun", kills:6 },
-  { name:"Player 4", kills:3 },
-  { name:"Player 5", kills:2 }
-];
+    const board = document.getElementById("board");
+    const status = document.getElementById("status");
+    const bountyList = document.getElementById("bountyList");
 
-/* ========================= */
+    function isOut(name){
+      return eliminated.includes(name);
+    }
 
-const board = document.getElementById("board");
-const status = document.getElementById("status");
+    function renderBounties(){
+      bountyList.innerHTML = "";
 
-function isOut(name){
-  return eliminated.includes(name);
-}
+      if(bounties.length === 0){
+        bountyList.innerHTML = `
+          <div class="bounty-card">
+            <div>No Active Bounties</div>
+            <div class="bounty-value">---</div>
+          </div>
+        `;
+        return;
+      }
 
-function render(){
+      bounties.forEach(b => {
+        bountyList.innerHTML += `
+          <div class="bounty-card">
+            <div>${b.name}</div>
+            <div class="bounty-value">${b.reward}</div>
+          </div>
+        `;
+      });
+    }
 
-  const top3 = [...players]
-    .sort((a,b)=>b.kills-a.kills)
-    .slice(0,3);
+    function renderLeaderboard(){
+      board.innerHTML = "";
 
-  status.innerText = `${REMAINING_PLAYERS} / ${TOTAL_PLAYERS}`;
+      const top3 = [...players]
+        .sort((a,b)=>b.kills-a.kills)
+        .slice(0,3);
 
-  const labels = ["🥇 TOP 1","🥈 TOP 2","🥉 TOP 3"];
+      const labels = [
+        "👑 LEADER",
+        "🥈 TOP 2",
+        "🥉 TOP 3"
+      ];
 
-  board.innerHTML = "";
+      top3.forEach((player,index)=>{
+        const statusBadge = isOut(player.name)
+          ? `<span class="out">🔴 ELIMINATED</span>`
+          : `<span class="active">🟢 ACTIVE</span>`;
 
-  top3.forEach((p,i)=>{
+        board.innerHTML += `
+          <div class="card">
+            <div class="name">
+              <span class="tag">${labels[index]}</span>
+              <span>${player.name}</span>
+              ${statusBadge}
+            </div>
 
-    const outTag = isOut(p.name)
-      ? `<span class="out">OUT</span>`
-      : "";
+            <div class="kills">
+              ${player.kills} ELIMS
+            </div>
+          </div>
+        `;
+      });
+    }
 
-    board.innerHTML += `
-      <div class="card">
-        <div class="name">
-          <span class="tag">${labels[i]}</span>
-          ${p.name}
-          ${outTag}
-        </div>
-        <div class="kills">${p.kills} ELIMS</div>
-      </div>
-    `;
-  });
-}
+    status.innerText = `${REMAINING_PLAYERS} / ${TOTAL_PLAYERS}`;
 
-render();
-
-</script>
+    renderLeaderboard();
+    renderBounties();
+  </script>
 
 </body>
 </html>
